@@ -1,0 +1,18 @@
+[
+  {
+    "description": "should_response_user_details_as_json",
+    "request": {
+      "uri": "/user"
+    },
+    "response": {
+      "status": 200,
+      "json": {
+        "id": 1,
+        "userName": "moscow",
+        "avatarUri": "https://abd/moscow.img",
+        "age": 10,
+        "both": "-120/11/11"
+      }
+    }
+  }
+]

@@ -1,0 +1,51 @@
+group 'kanban'
+version '1.0-SNAPSHOT'
+
+buildscript {
+    ext {
+        springBootVersion = "1.3.3.RELEASE"
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'spring-boot'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+    maven {
+        url 'https://oss.sonatype.org/content/groups/public/'
+    }
+}
+
+dependencies {
+
+    ext{
+        gson_version = "2.5"
+    }
+    compile("org.springframework.boot:spring-boot-starter-web:${springBootVersion}"){
+        exclude module: "spring-boot-starter-tomcat"
+    }
+    compile("com.google.code.gson:gson:${gson_version}")
+    compile("org.springframework.boot:spring-boot-starter-jetty:${springBootVersion}")
+    compile("org.springframework.boot:spring-boot-starter-actuator:${springBootVersion}")
+    compile("org.springframework.boot:spring-boot-starter-data-mongodb:${springBootVersion}")
+    compile("org.springframework.boot:spring-boot-starter-data-rest:${springBootVersion}")
+    compile("org.springframework.hateoas:spring-hateoas")
+    compile("org.skyscreamer:jsonassert:1.3.0")
+    compile('org.projectlombok:lombok:1.16.8')
+    testCompile("junit:junit")
+    testCompile("org.springframework.boot:spring-boot-starter-test:${springBootVersion}")
+    testCompile 'com.github.macdao:moscow:0.1-SNAPSHOT'
+    testRuntime 'com.squareup.okhttp3:okhttp:3.1.2'
+}
+
