@@ -21,6 +21,6 @@ public class CardResourceAssembler extends ResourceAssemblerSupport<Card, CardRe
 
     @Override
     public CardResource toResource(Card card) {
-        return new CardResource(card ,linkTo(methodOn(CardController.class).getCardById(card.getCardId())).withSelfRel());
+        return new CardResource(card ,linkTo(methodOn(CardController.class).getCardById(card.getColumn().getId(), card.getId())).withSelfRel());
     }
 }

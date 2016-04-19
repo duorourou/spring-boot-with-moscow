@@ -1,59 +1,127 @@
 package demo.kanban.contract.moscow.controller;
 
-import demo.kanban.contract.moscow.resource.card.Card;
-import demo.kanban.contract.moscow.resource.card.CardResource;
+import demo.kanban.contract.moscow.repository.ColumnRepository;
+import demo.kanban.contract.moscow.resource.card.*;
+import demo.kanban.contract.moscow.resource.column.Column;
 import demo.kanban.contract.moscow.service.CardService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpStatus;
+import org.springframework.hateoas.Resources;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.Date;
 
 /**
  * Created by xchou on 4/17/16.
  */
 @RestController
-@RequestMapping("/column/{columnId}/cards/")
+@RequestMapping("/column/{columnId}/cards")
 public class CardController {
+
+    int number;
 
     @Autowired
     CardService cardService;
 
-    @RequestMapping(method = RequestMethod.GET,produces = "application/json")
-    public HttpEntity<List<CardResource>> getAllCards(@PathVariable String columnId) {
+    @Autowired
+    ColumnRepository repository;
 
-        cardService.getCardInColumn(columnId);
-        List<Card> cards = Arrays.asList(new Card("card_1", "card 1"), new Card("card_2", "card 2"), new Card("card_3", "card 3"));
-        CardResourceAssembler cardAssembler = new CardResourceAssembler();
-        List<CardResource> cardResources = cardAssembler.toResources(cards);
-        return new ResponseEntity<>(cardResources, HttpStatus.OK);
+    @RequestMapping(method = RequestMethod.GET, produces = "application/json")
+    public Resources<CardResource> getAllCards(@PathVariable String columnId) {
+        mockCardData(columnId);
+        return cardService.getCardInColumn(columnId);
     }
 
-    @RequestMapping(method = RequestMethod.POST,produces = "application/json")
-    public HttpEntity<CardResource> saveCard(@RequestBody Card card) {
-
-        cardService.saveCard(card);
-        CardResourceAssembler cardAssembler = new CardResourceAssembler();
-        CardResource cardResource = cardAssembler.toResource(card);
-        return new ResponseEntity<>(cardResource, HttpStatus.OK);
+    @RequestMapping(method = RequestMethod.POST, produces = "application/json")
+    public CardResource saveCard(@PathVariable String columnId, @RequestBody Card card) {
+        return cardService.saveCard(card);
     }
 
     @RequestMapping(path = "/{cardId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public HttpEntity<CardResource> getCardById(@PathVariable String cardId) {
+    public CardResource getCardById(@PathVariable String columnId, @PathVariable String cardId) {
+        return cardService.getCardById(cardId);
+    }
 
-        Card card = new Card(cardId, "card 1");
-        card.setId("1");
-        List<Card> children = Arrays.asList(new Card("child_1", "child One"));
-        Card parent = new Card("Parent card", "parent ccarddd");
-        card.setParent(parent);
-        card.setChildren(children);
-        CardResourceAssembler cardAssembler = new CardResourceAssembler();
-        CardResource cardResource = cardAssembler.toResource(card);
-        return new ResponseEntity<>(cardResource, HttpStatus.OK);
+    private Card mockCardData(String columnId) {
+
+        Column column = new Column();
+        column.setId(columnId);
+        repository.save(column);
+
+        CardRelations cardRelations = new CardRelations();
+
+        CardRisk risk = new CardRisk();
+        risk.setRiskType("block");
+        risk.setRiskDescription("blocked by another story!");
+
+        CardMetadata metadata = new CardMetadata();
+        metadata.setCardId("card-" + number++);
+        metadata.setType("story");
+        metadata.setTitle("card title - " + number++);
+        metadata.setDeliveryDate(new Date());
+
+
+        Card card_1 = new Card();
+        card_1.setColumn(column);
+        card_1.setMetadata(metadata);
+        card_1.setRisk(risk);
+        cardService.saveCard(card_1);
+
+        Card card_2 = new Card();
+        card_2.setColumn(column);
+        metadata.setCardId("card-" + number++);
+        metadata.setTitle("card title - " + number++);
+        card_2.setMetadata(metadata);
+        card_2.setRisk(risk);
+        cardRelations.setParent(card_1);
+        card_2.setRelations(cardRelations);
+        cardService.saveCard(card_2);
+
+
+        Card card_3 = new Card();
+        card_3.setColumn(column);
+        metadata.setCardId("card-" + number++);
+        metadata.setTitle("card title - " + number++);
+        card_3.setMetadata(metadata);
+        card_3.setRisk(risk);
+        cardRelations.setParent(card_1);
+        card_3.setRelations(cardRelations);
+        cardService.saveCard(card_3);
+
+
+        Card card_4 = new Card();
+        card_4.setColumn(column);
+        metadata.setCardId("card-" + number++);
+        metadata.setTitle("card title - " + number++);
+        card_4.setMetadata(metadata);
+        card_4.setRisk(risk);
+        cardRelations.setParent(card_3);
+        card_4.setRelations(cardRelations);
+        cardService.saveCard(card_4);
+
+
+        Card card_5 = new Card();
+        card_5.setColumn(column);
+        metadata.setCardId("card-" + number++);
+        metadata.setTitle("card title - " + number++);
+        card_5.setMetadata(metadata);
+        card_5.setRisk(risk);
+        cardRelations.setParent(card_4);
+        card_5.setRelations(cardRelations);
+        cardService.saveCard(card_5);
+
+
+        Card card_6 = new Card();
+        card_6.setColumn(column);
+        metadata.setCardId("card-" + number++);
+        metadata.setTitle("card title - " + number++);
+        card_6.setMetadata(metadata);
+        card_6.setRisk(risk);
+        cardRelations.setParent(card_4);
+        card_6.setRelations(cardRelations);
+        cardService.saveCard(card_6);
+
+        return card_1;
     }
 
 }

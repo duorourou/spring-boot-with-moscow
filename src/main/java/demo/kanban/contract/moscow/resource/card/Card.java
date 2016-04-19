@@ -1,16 +1,13 @@
 package demo.kanban.contract.moscow.resource.card;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import demo.kanban.contract.moscow.resource.column.Column;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.hateoas.Identifiable;
-
-import java.util.Date;
-import java.util.List;
 
 /**
  * Created by xchou on 4/17/16.
@@ -26,19 +23,15 @@ public class Card implements Identifiable<String> {
 
     @Id
     private String id;
-    private String cardId;
-    private String type;
-    private String owner;
-    private List<String> assigners;
-    private String title;
-    private String risk;
-    private Card parent;
+
+    private CardMetadata metadata;
+    private CardRisk risk;
+
+    @JsonIgnore
+    private CardRelations relations;
+
     @DBRef
     private Column column;
-    @DBRef
-    @Lazy(true)
-    private List<Card> children;
-    private Date deliveryDate;
 
     public Card() {
     }
@@ -47,91 +40,33 @@ public class Card implements Identifiable<String> {
         this.id = id;
     }
 
-    public Card(String cardId, String title) {
-        this.cardId = cardId;
-        this.title = title;
-    }
-
-    public String getCardId() {
-        return cardId;
-    }
-
     @Override
     public String getId() {
         return this.id;
     }
 
-    @Override
-    public String toString() {
-        return "Card[]";
+    public CardMetadata getMetadata() {
+        return metadata;
     }
 
-    public void setCardId(String cardId) {
-        this.cardId = cardId;
+    public void setMetadata(CardMetadata metadata) {
+        this.metadata = metadata;
     }
 
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public String getOwner() {
-        return owner;
-    }
-
-    public void setOwner(String owner) {
-        this.owner = owner;
-    }
-
-    public List<String> getAssigners() {
-        return assigners;
-    }
-
-    public void setAssigners(List<String> assigners) {
-        this.assigners = assigners;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getRisk() {
+    public CardRisk getRisk() {
         return risk;
     }
 
-    public void setRisk(String risk) {
+    public void setRisk(CardRisk risk) {
         this.risk = risk;
     }
 
-    public Card getParent() {
-        return parent;
+    public CardRelations getRelations() {
+        return relations;
     }
 
-    public void setParent(Card parent) {
-        this.parent = parent;
-    }
-
-    public List<Card> getChildren() {
-        return children;
-    }
-
-    public void setChildren(List<Card> children) {
-        this.children = children;
-    }
-
-    public Date getDeliveryDate() {
-        return deliveryDate;
-    }
-
-    public void setDeliveryDate(Date deliveryDate) {
-        this.deliveryDate = deliveryDate;
+    public void setRelations(CardRelations relations) {
+        this.relations = relations;
     }
 
     public Column getColumn() {

@@ -1,5 +1,6 @@
 package demo.kanban.contract.moscow.resource.column;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -21,8 +22,11 @@ public class Column implements Identifiable<String> {
     @Id
     private String id;
 
+    @JsonIgnore
     private String laneName;
+    @JsonIgnore
     private String laneDesc;
+    @JsonIgnore
     private Date createdAt;
 
     @Override
