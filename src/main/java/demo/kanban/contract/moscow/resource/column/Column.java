@@ -16,7 +16,7 @@ import java.util.Date;
 @Getter
 @Setter
 @NoArgsConstructor
-@Document(collection = "lanes")
+@Document(collection = "columns")
 public class Column implements Identifiable<String> {
 
     @Id

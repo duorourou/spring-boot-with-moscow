@@ -1,13 +1,15 @@
 package demo.kanban.contract.moscow.resource.card;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import demo.kanban.contract.moscow.resource.column.Column;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.hateoas.Identifiable;
+
+import java.util.HashMap;
 
 /**
  * Created by xchou on 4/17/16.
@@ -15,58 +17,20 @@ import org.springframework.hateoas.Identifiable;
 @Getter
 @Setter
 @NoArgsConstructor
+@Document(collection = "cards")
 public class Card implements Identifiable<String> {
-
-    public void setId(String id) {
-        this.id = id;
-    }
 
     @Id
     private String id;
 
-    private CardMetadata metadata;
-    private CardRisk risk;
+    private HashMap<String, Object> metadata = new HashMap<>();
 
-    @JsonIgnore
-    private CardRelations relations;
+    private boolean inRisk;
 
     @DBRef
     private Column column;
 
     public Card() {
-    }
-
-    public Card(String id) {
-        this.id = id;
-    }
-
-    @Override
-    public String getId() {
-        return this.id;
-    }
-
-    public CardMetadata getMetadata() {
-        return metadata;
-    }
-
-    public void setMetadata(CardMetadata metadata) {
-        this.metadata = metadata;
-    }
-
-    public CardRisk getRisk() {
-        return risk;
-    }
-
-    public void setRisk(CardRisk risk) {
-        this.risk = risk;
-    }
-
-    public CardRelations getRelations() {
-        return relations;
-    }
-
-    public void setRelations(CardRelations relations) {
-        this.relations = relations;
     }
 
     public Column getColumn() {
@@ -75,5 +39,30 @@ public class Card implements Identifiable<String> {
 
     public void setColumn(Column column) {
         this.column = column;
+    }
+
+    @Override
+    public String getId() {
+        return this.id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public HashMap<String, Object> getMetadata() {
+        return metadata;
+    }
+
+    public void setMetadata(HashMap<String, Object> metadata) {
+        this.metadata = metadata;
+    }
+
+    public boolean isInRisk() {
+        return inRisk;
+    }
+
+    public void setInRisk(boolean inRisk) {
+        this.inRisk = inRisk;
     }
 }
