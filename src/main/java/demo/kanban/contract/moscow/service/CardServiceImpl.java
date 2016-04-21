@@ -17,6 +17,7 @@ import org.springframework.hateoas.PagedResources;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 import static demo.kanban.contract.moscow.resource.card.CardFields.*;
@@ -49,10 +50,20 @@ public class CardServiceImpl implements CardService {
     }
 
     @Override
+    public List<SimpleCardResource> getCardsInColumn(String columnId) {
+        Iterable<Card> cards = cardRepository.findAll(Arrays.asList("57179778d4c61a45b771b2fb" ,"57179c20d4c6bb0dff727bd4"));
+        return new SimpleCardResourceAssembler(
+                Arrays.asList(CARD_IN_RISK, CARD_PROGRESS, CARD_START_DATE, CARD_DELIVERY_DATE, CARD_PARENT))
+                .toResources(cards);
+    }
+
+    @Override
     public CardResource saveCard(Card card) {
         cardRepository.save(card);
         return new CardResourceAssembler().toResource(card);
     }
+
+
 
     @Override
     public CardResource getCardById(String cardId) {

@@ -9,12 +9,12 @@ import demo.kanban.contract.moscow.resource.column.Column;
 import demo.kanban.contract.moscow.service.CardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.PagedResources;
-import org.springframework.hateoas.Resources;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by xchou on 4/17/16.
@@ -33,8 +33,14 @@ public class CardController {
 
     @RequestMapping(method = RequestMethod.GET, produces = "application/json")
     public PagedResources<SimpleCardResource> getAllCards(@PathVariable String columnId) {
-        mockCardData(columnId);
+//        mockCardData(columnId);
         return cardService.getCardInColumn(columnId);
+    }
+
+    @RequestMapping(path = "/spec", method = RequestMethod.GET, produces = "application/json")
+    public List<SimpleCardResource> getCards(@PathVariable String columnId) {
+//        mockCardData(columnId);
+        return cardService.getCardsInColumn(columnId);
     }
 
     @RequestMapping(method = RequestMethod.POST, produces = "application/json")
