@@ -30,9 +30,6 @@ public class Card implements Identifiable<String> {
     @DBRef
     private Column column;
 
-    public Card() {
-    }
-
     public Column getColumn() {
         return column;
     }
@@ -44,25 +41,5 @@ public class Card implements Identifiable<String> {
     @Override
     public String getId() {
         return this.id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public HashMap<String, Object> getMetadata() {
-        return metadata;
-    }
-
-    public void setMetadata(HashMap<String, Object> metadata) {
-        this.metadata = metadata;
-    }
-
-    public boolean isInRisk() {
-        return inRisk;
-    }
-
-    public void setInRisk(boolean inRisk) {
-        this.inRisk = inRisk;
     }
 }

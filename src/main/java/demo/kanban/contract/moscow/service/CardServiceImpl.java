@@ -5,7 +5,7 @@ import demo.kanban.contract.moscow.controller.CardResourceAssembler;
 import demo.kanban.contract.moscow.controller.SimpleCardPagedResourceAssembler;
 import demo.kanban.contract.moscow.controller.SimpleCardResourceAssembler;
 import demo.kanban.contract.moscow.repository.CardRepository;
-import demo.kanban.contract.moscow.repository.ColumnRepository;
+import demo.kanban.contract.moscow.repository.KanbanSeqsDao;
 import demo.kanban.contract.moscow.resource.card.Card;
 import demo.kanban.contract.moscow.resource.card.CardResource;
 import demo.kanban.contract.moscow.resource.card.SimpleCardResource;
@@ -34,7 +34,7 @@ public class CardServiceImpl implements CardService {
     CardRepository cardRepository;
 
     @Autowired
-    ColumnRepository columnRepository;
+    KanbanSeqsDao seqsDao;
 
     @Override
     public PagedResources<SimpleCardResource> getCardInColumn(String columnId) {
@@ -59,6 +59,7 @@ public class CardServiceImpl implements CardService {
 
     @Override
     public CardResource saveCard(Card card) {
+        System.err.println("sequence card - number : " + seqsDao.getNextSeq("board_number"));
         cardRepository.save(card);
         return new CardResourceAssembler().toResource(card);
     }

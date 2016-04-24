@@ -33,8 +33,9 @@ public class CardController {
 
     @RequestMapping(method = RequestMethod.GET, produces = "application/json")
     public PagedResources<SimpleCardResource> getAllCards(@PathVariable String columnId) {
-//        mockCardData(columnId);
+        mockCardData(columnId);
         return cardService.getCardInColumn(columnId);
+//        return cardService.getCardInColumn(columnId);
     }
 
     @RequestMapping(path = "/spec", method = RequestMethod.GET, produces = "application/json")

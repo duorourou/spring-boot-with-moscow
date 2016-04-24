@@ -5,3 +5,7 @@ spring:
   data:
     mongodb:
       uri: mongodb://localhost/kanban
+
+
+  jpa:
+    show-sql: true
