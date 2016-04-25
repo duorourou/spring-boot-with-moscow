@@ -18,7 +18,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import static demo.kanban.contract.moscow.resource.card.CardFields.*;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
@@ -38,7 +40,32 @@ public class CardServiceImpl implements CardService {
 
     @Override
     public PagedResources<SimpleCardResource> getCardInColumn(String columnId) {
+        List<String> ids = Arrays.asList("57179602d4c609b02e81c74d",
+        "57179679d4c6f1f045b76522",
+        "571796b5d4c6f1f045b76523",
+        "571796c6d4c6f1f045b76524",
+        "57179778d4c61a45b771b2fb",
+        "5717985bd4c672b4ee037e44",
+        "57179ab3d4c643217fbbdfc8",
+        "57179c20d4c6bb0dff727bd4",
+        "57179c51d4c6829f405075a6",
+        "5717a07ed4c696e26833d86b",
+        "5717a138d4c6f4163d37c74e",
+        "5717a264d4c6385b9db0b86f",
+        "5717a308d4c6385b9db0b870",
+        "571a36a4a7c8591f30b8a0ec",
+        "571ac289d4c6ac578dd4c088",
+        "571ac358d4c6b48aa953b9a3",
+        "571ac36ed4c6cb310c7f08f8",
+        "571ac4a6d4c68b74fd997d20",
+        "571ac4b3d4c614854ea4ad4c",
+        "571ac4ccd4c6c5587b468c95");
         Page<Card> cards = cardRepository.findCardByColumn(new Column(columnId), new PageRequest(0, 20));
+        Map<String , Card> resultMap = cards.getContent().stream().collect(Collectors.toMap(Card::getId , card -> card));
+
+//        cards.getContent().removeAll(cards.getContent());
+//        cards.getContent().addAll(ids.stream().collect(Collectors.mapping(cardId -> resultMap.get(cardId) , Collectors.toList())));
+
         if (Objects.isNull(cards)) {
             return null;
         }

@@ -1,9 +1,6 @@
 package demo.kanban.contract.moscow.resource.column;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.hateoas.Identifiable;
@@ -13,9 +10,6 @@ import java.util.Date;
 /**
  * Created by xchou on 4/18/16.
  */
-@Getter
-@Setter
-@NoArgsConstructor
 @Document(collection = "columns")
 public class Column implements Identifiable<String> {
 
@@ -34,11 +28,11 @@ public class Column implements Identifiable<String> {
         return this.id;
     }
 
-    public Column() {
-    }
-
     public Column(String id) {
         this.id = id;
+    }
+
+    public Column() {
     }
 
     public void setId(String id) {

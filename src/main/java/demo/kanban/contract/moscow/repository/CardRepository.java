@@ -5,12 +5,14 @@ import demo.kanban.contract.moscow.resource.column.Column;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.mongodb.repository.Query;
 
 /**
  * Created by xchou on 4/18/16.
  */
 public interface CardRepository extends MongoRepository<Card, String>{
 
+    @Query(fields = "{'_id': 1 , 'metadata': 1 , 'column' : 1}")
     Page<Card> findCardByColumn(Column colum, Pageable pageable);
 
 }
