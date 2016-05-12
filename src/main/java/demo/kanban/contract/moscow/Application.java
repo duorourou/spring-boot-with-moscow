@@ -1,11 +1,13 @@
 package demo.kanban.contract.moscow;
 
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
  * Created by xchou on 4/12/16.
  */
+@EnableAutoConfiguration
 @SpringBootApplication
 public class Application {
     public static void main(String[] args) {

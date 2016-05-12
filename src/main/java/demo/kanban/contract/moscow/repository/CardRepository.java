@@ -10,9 +10,14 @@ import org.springframework.data.mongodb.repository.Query;
 /**
  * Created by xchou on 4/18/16.
  */
-public interface CardRepository extends MongoRepository<Card, String>{
+public interface CardRepository extends MongoRepository<Card, String> {
 
     @Query(fields = "{'_id': 1 , 'metadata': 1 , 'column' : 1}")
     Page<Card> findCardByColumn(Column colum, Pageable pageable);
+
+    default Card findById(String id) {
+        Card card = this.findOne(id);
+        return card != null && !card.isDeleted() ? card : null;
+    }
 
 }

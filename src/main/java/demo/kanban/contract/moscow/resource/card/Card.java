@@ -6,6 +6,8 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.hateoas.Identifiable;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.HashMap;
 
 /**
@@ -19,7 +21,31 @@ public class Card implements Identifiable<String> {
 
     private HashMap<String, Object> metadata = new HashMap<>();
 
+    @NotNull
     private boolean inRisk;
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
+    }
+
+    private boolean deleted = false;
+
+    public String getRisk() {
+        return risk;
+    }
+
+    public void setRisk(String risk) {
+        this.risk = risk;
+    }
+
+    @NotNull
+    @Size(max = 10 , min = 3)
+    private String risk;
+
 
     @DBRef
     private Column column;

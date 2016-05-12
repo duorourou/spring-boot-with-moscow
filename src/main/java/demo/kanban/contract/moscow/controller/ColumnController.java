@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -32,7 +33,7 @@ public class ColumnController {
     }
 
     @RequestMapping(method = RequestMethod.POST, produces = "application/json")
-    public HttpEntity<ColumnResource> saveColumn(@RequestBody Column column) {
+    public HttpEntity<ColumnResource> saveColumn(@Valid @RequestBody Column column) {
         columnRepository.save(column);
         ColumnResource columnResource = new ColumnResourceAssembler().toResource(column);
         return new ResponseEntity(columnResource, HttpStatus.OK);

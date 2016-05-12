@@ -5,6 +5,8 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.hateoas.Identifiable;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Date;
 
 /**
@@ -15,8 +17,8 @@ public class Column implements Identifiable<String> {
 
     @Id
     private String id;
-
-    @JsonIgnore
+    @NotNull
+    @Size(max = 5 , min = 3)
     private String laneName;
     @JsonIgnore
     private String laneDesc;
