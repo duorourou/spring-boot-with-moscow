@@ -5,6 +5,7 @@ import demo.kanban.contract.moscow.resource.card.CardResource;
 import demo.kanban.contract.moscow.resource.card.SimpleCardResource;
 import org.springframework.hateoas.PagedResources;
 
+import java.net.UnknownHostException;
 import java.util.List;
 
 /**
@@ -18,6 +19,6 @@ public interface CardService {
 
     CardResource getCardById(String cardId);
 
-    List<SimpleCardResource> getCardsInColumn(String columnId);
+    List<Card> getCardsInColumn(String columnId) throws UnknownHostException;
 
 }

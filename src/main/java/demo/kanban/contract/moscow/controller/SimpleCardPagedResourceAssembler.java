@@ -12,6 +12,6 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 public class SimpleCardPagedResourceAssembler extends PagedResourcesAssembler<Card> {
 
     public SimpleCardPagedResourceAssembler(String columnId) {
-        super(null, linkTo(methodOn(CardController.class).getAllCards(columnId)).toUriComponentsBuilder().build());
+        super(null, linkTo(methodOn(CardController.class).getAllCards(null, columnId)).toUriComponentsBuilder().build());
     }
 }

@@ -1,12 +1,9 @@
 package demo.kanban.contract.moscow.configuration;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.mongodb.core.mapping.Document;
-
 //@Configuration
 public class CardTemplate {
 
-    private @Value("#{spring.data.mongodb.uri}") String mongo;
+//    private @Value("#{spring.data.mongodb.uri}") String mongo;
 
 //    @Bean
 //    @Lazy
@@ -41,43 +38,43 @@ public class CardTemplate {
 //    }
 
 
-    @Document(collection = "card_default_template")
-    private class CardDefaultTemplate {
-        private String name;
-        private String title;
-        private String number;
-        private String desc;
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public String getTitle() {
-            return title;
-        }
-
-        public void setTitle(String title) {
-            this.title = title;
-        }
-
-        public String getNumber() {
-            return number;
-        }
-
-        public void setNumber(String number) {
-            this.number = number;
-        }
-
-        public String getDesc() {
-            return desc;
-        }
-
-        public void setDesc(String desc) {
-            this.desc = desc;
-        }
-    }
+//    @Document(collection = "card_default_template")
+//    private class CardDefaultTemplate {
+//        private String name;
+//        private String title;
+//        private String number;
+//        private String desc;
+//
+//        public String getName() {
+//            return name;
+//        }
+//
+//        public void setName(String name) {
+//            this.name = name;
+//        }
+//
+//        public String getTitle() {
+//            return title;
+//        }
+//
+//        public void setTitle(String title) {
+//            this.title = title;
+//        }
+//
+//        public String getNumber() {
+//            return number;
+//        }
+//
+//        public void setNumber(String number) {
+//            this.number = number;
+//        }
+//
+//        public String getDesc() {
+//            return desc;
+//        }
+//
+//        public void setDesc(String desc) {
+//            this.desc = desc;
+//        }
+//    }
 }

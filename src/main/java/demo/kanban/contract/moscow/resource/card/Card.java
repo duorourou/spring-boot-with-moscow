@@ -1,6 +1,9 @@
 package demo.kanban.contract.moscow.resource.card;
 
 import demo.kanban.contract.moscow.resource.column.Column;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -16,8 +19,12 @@ import java.util.HashMap;
 @Document(collection = "cards")
 public class Card implements Identifiable<String> {
 
+    private static final Logger logger = LoggerFactory.getLogger(Card.class);
+
     @Id
     private String id;
+
+    private String number;
 
     private HashMap<String, Object> metadata = new HashMap<>();
 
@@ -50,7 +57,10 @@ public class Card implements Identifiable<String> {
     @DBRef
     private Column column;
 
+    @Cacheable(key = "#{column.id}")
     public Column getColumn() {
+
+        logger.info("column id : " + column.getId());
         return column;
     }
 
@@ -64,6 +74,10 @@ public class Card implements Identifiable<String> {
     }
 
     public Card() {
+    }
+
+    public Card(int number) {
+        this.number = "Story - " + number;
     }
 
     public void setId(String id) {

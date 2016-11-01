@@ -2,9 +2,8 @@ package demo.kanban.contract.moscow.repository;
 
 import demo.kanban.contract.moscow.resource.column.Column;
 import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.stereotype.Repository;
 
-/**
- * Created by xchou on 4/18/16.
- */
+@Repository
 public interface ColumnRepository extends MongoRepository<Column, String>{
 }

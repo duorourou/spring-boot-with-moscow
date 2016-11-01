@@ -1,11 +1,11 @@
 server:
   port: 8999
+  session:
+    timeout: 10
 
-spring:
-  data:
-    mongodb:
-      uri: mongodb://localhost/kanban
+  error:
+    path: /error
 
+logging:
+  file: logs/myapplication.log
 
-  jpa:
-    show-sql: true

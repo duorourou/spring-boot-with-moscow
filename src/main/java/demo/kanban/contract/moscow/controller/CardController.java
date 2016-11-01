@@ -1,5 +1,6 @@
 package demo.kanban.contract.moscow.controller;
 
+import demo.kanban.contract.moscow.integration.AutoUpdateConf;
 import demo.kanban.contract.moscow.repository.ColumnRepository;
 import demo.kanban.contract.moscow.resource.card.Card;
 import demo.kanban.contract.moscow.resource.card.CardResource;
@@ -8,9 +9,12 @@ import demo.kanban.contract.moscow.service.CardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.PagedResources;
 import org.springframework.http.MediaType;
+import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.net.UnknownHostException;
 import java.util.List;
 
 /**
@@ -28,16 +32,29 @@ public class CardController {
     @Autowired
     ColumnRepository repository;
 
+    @Autowired
+    AutoUpdateConf conf;
+
     @RequestMapping(method = RequestMethod.GET, produces = "application/json")
-    public PagedResources<SimpleCardResource> getAllCards(@PathVariable String columnId) {
+    public PagedResources<SimpleCardResource> getAllCards(HttpSession session, @PathVariable String columnId) {
+//        Card card;
+//        Column column = new Column();
+//        column.setId(columnId);
+//        for(int i = 10; i < 20; i ++){
+//            card = new Card();
+//            card.setColumn(column);
+//            card.setRisk("risk " + i);
+//            cardService.saveCard(card);
+//        }
+        conf.initInputChannel().send(MessageBuilder.withPayload("a").build());
         return cardService.getCardInColumn(columnId);
-//        return cardService.getCardInColumn(columnId);
     }
 
     @RequestMapping(path = "/spec", method = RequestMethod.GET, produces = "application/json")
-    public List<SimpleCardResource> getCards(@PathVariable String columnId) {
-//        mockCardData(columnId);
+    public List<Card> getCards(@PathVariable String columnId) throws UnknownHostException {
+        conf.cardInputChannel().send(MessageBuilder.withPayload("789").build());
         return cardService.getCardsInColumn(columnId);
+
     }
 
     @RequestMapping(method = RequestMethod.POST, produces = "application/json")

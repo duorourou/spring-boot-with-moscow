@@ -9,9 +9,6 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Repository;
 
-/**
- * Created by xchou on 4/22/16.
- */
 @Repository
 public class KanbanSeqsDao  {
 

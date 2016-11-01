@@ -18,6 +18,7 @@ import org.springframework.hateoas.Link;
 import org.springframework.hateoas.PagedResources;
 import org.springframework.stereotype.Service;
 
+import java.net.UnknownHostException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -40,6 +41,8 @@ public class CardServiceImpl implements CardService {
     @Autowired
     KanbanSeqsDao seqsDao;
 
+
+
     @Override
     public PagedResources<SimpleCardResource> getCardInColumn(String columnId) {
         Sort sort = new Sort(Sort.Direction.ASC, "metadata.leadDate");
@@ -47,17 +50,19 @@ public class CardServiceImpl implements CardService {
         Page<Card> cards = cardRepository.findCardByColumn(new Column(columnId), pageRequest);
 
         SimpleCardResourceAssembler assembler = new SimpleCardResourceAssembler(customizedKeys);
-        Link selfRel = linkTo(methodOn(CardController.class).getAllCards(columnId)).withSelfRel();
+        Link selfRel = linkTo(methodOn(CardController.class).getAllCards(null, columnId)).withSelfRel();
         return new SimpleCardPagedResourceAssembler(columnId)
                 .toResource(cards, assembler, selfRel);
     }
 
     @Override
-    public List<SimpleCardResource> getCardsInColumn(String columnId) {
-        Iterable<Card> cards = cardRepository.findAll(Arrays.asList("57179778d4c61a45b771b2fb", "57179c20d4c6bb0dff727bd4"));
-        return new SimpleCardResourceAssembler(
-                Arrays.asList(CARD_IN_RISK, CARD_PROGRESS, CARD_START_DATE, CARD_DELIVERY_DATE, CARD_PARENT))
-                .toResources(cards);
+    public List<Card> getCardsInColumn(String columnId) throws UnknownHostException {
+
+
+        return cardRepository.findByColumnAndDeleted(columnId, false);
+//        return new SimpleCardResourceAssembler(
+//                Arrays.asList(CARD_IN_RISK, CARD_PROGRESS, CARD_START_DATE, CARD_DELIVERY_DATE, CARD_PARENT))
+//                .toResources(cards);
     }
 
     @Override
