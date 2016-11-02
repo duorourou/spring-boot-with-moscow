@@ -42,6 +42,9 @@ public class ColumnController {
     @RequestMapping(method = RequestMethod.GET, produces = "application/json")
     public HttpEntity<UserResource> getAllColumns() {
         List<Column> columnList = columnRepository.findAll();
+        if(columnList.isEmpty()) {
+            columnRepository.save(new Column("T1", "T2"));
+        }
         List<ColumnResource> columnResources = new ColumnResourceAssembler().toResources(columnList);
         return new ResponseEntity(columnResources, HttpStatus.OK);
     }

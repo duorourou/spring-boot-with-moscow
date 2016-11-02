@@ -42,6 +42,8 @@ dependencies {
     compile("org.springframework.hateoas:spring-hateoas")
     compile("org.skyscreamer:jsonassert:1.3.0")
     compile('org.projectlombok:lombok:1.16.8')
+    compile group: 'org.jasypt', name: 'jasypt', version: '1.9.2'
+    compile group: 'org.jasypt', name: 'jasypt-spring31', version: '1.9.2'
     testCompile("junit:junit")
     testCompile("org.springframework.boot:spring-boot-starter-test:${springBootVersion}")
     testCompile 'com.github.macdao:moscow:0.1-SNAPSHOT'

@@ -5,7 +5,10 @@ server:
 
   error:
     path: /error
-
+spring:
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/${security.mongodb.password}
 logging:
   file: logs/myapplication.log
 

@@ -18,7 +18,7 @@ public class Column implements Identifiable<String> {
     @Id
     private String id;
     @NotNull
-    @Size(max = 5 , min = 3)
+    @Size(max = 5, min = 3)
     private String laneName;
     @JsonIgnore
     private String laneDesc;
@@ -35,6 +35,11 @@ public class Column implements Identifiable<String> {
     }
 
     public Column() {
+    }
+
+    public Column(String laneName, String laneDesc) {
+        this.laneName = laneName;
+        this.laneDesc = laneDesc;
     }
 
     public void setId(String id) {
