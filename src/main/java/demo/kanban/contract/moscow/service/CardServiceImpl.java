@@ -5,7 +5,6 @@ import demo.kanban.contract.moscow.controller.CardResourceAssembler;
 import demo.kanban.contract.moscow.controller.SimpleCardPagedResourceAssembler;
 import demo.kanban.contract.moscow.controller.SimpleCardResourceAssembler;
 import demo.kanban.contract.moscow.repository.CardRepository;
-import demo.kanban.contract.moscow.repository.KanbanSeqsDao;
 import demo.kanban.contract.moscow.resource.card.Card;
 import demo.kanban.contract.moscow.resource.card.CardResource;
 import demo.kanban.contract.moscow.resource.card.SimpleCardResource;
@@ -38,14 +37,10 @@ public class CardServiceImpl implements CardService {
     @Autowired
     CardRepository cardRepository;
 
-    @Autowired
-    KanbanSeqsDao seqsDao;
-
-
 
     @Override
-    public PagedResources<SimpleCardResource> getCardInColumn(String columnId) {
-        Sort sort = new Sort(Sort.Direction.ASC, "metadata.leadDate");
+    public PagedResources<SimpleCardResource> getCardInColumn(Integer columnId) {
+        Sort sort = new Sort(Sort.Direction.ASC, "id");
         PageRequest pageRequest = new PageRequest(0, 20, sort);
         Page<Card> cards = cardRepository.findCardByColumn(new Column(columnId), pageRequest);
 
@@ -56,7 +51,7 @@ public class CardServiceImpl implements CardService {
     }
 
     @Override
-    public List<Card> getCardsInColumn(String columnId) throws UnknownHostException {
+    public List<Card> getCardsInColumn(Integer columnId) throws UnknownHostException {
 
 
         return cardRepository.findByColumnAndDeleted(columnId, false);
@@ -67,14 +62,13 @@ public class CardServiceImpl implements CardService {
 
     @Override
     public CardResource saveCard(Card card) {
-        System.err.println("sequence card - number : " + seqsDao.getNextSeq("board_number"));
         cardRepository.save(card);
         return new CardResourceAssembler().toResource(card);
     }
 
 
     @Override
-    public CardResource getCardById(String cardId) {
+    public CardResource getCardById(Integer cardId) {
         return new CardResourceAssembler().toResource(cardRepository.findById(cardId));
     }
 }

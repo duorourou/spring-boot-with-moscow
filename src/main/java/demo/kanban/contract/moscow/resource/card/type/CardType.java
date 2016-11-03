@@ -1,55 +1,25 @@
 package demo.kanban.contract.moscow.resource.card.type;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.hateoas.Identifiable;
+import lombok.Getter;
 
-import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
 /**
  * Created by xchou on 5/12/16.
  */
-@Document(collection = "cardTypes")
-public class CardType implements Identifiable<String> {
+@Getter
+@Entity(name = "cardTypes")
+public class CardType {
 
-    private String id;
+    @Id
+    @GeneratedValue
+    private Integer id;
     private String name;
-    @JsonIgnore
-    private List<CardAttribute> attributeList;
-    private List<String> cardAttributes;
-    private List<String> customizedAttributes;
 
-    @Override
-    public String getId() {
-        return this.id;
-    }
-
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
-    }
-
-    public List<CardAttribute> getAttributeList() {
-        return attributeList;
-    }
-
-    public void setAttributeList(List<CardAttribute> attributeList) {
-        this.attributeList = attributeList;
-    }
-
-    public List<String> getCardAttributes() {
-        return cardAttributes;
-    }
-
-    public void setCardAttributes(List<String> cardAttributes) {
-        this.cardAttributes = cardAttributes;
-    }
-
-    public List<String> getCustomizedAttributes() {
-        return customizedAttributes;
-    }
-
-    public void setCustomizedAttributes(List<String> customizedAttributes) {
-        this.customizedAttributes = customizedAttributes;
     }
 
     public String getName() {

@@ -8,17 +8,17 @@ import java.util.HashMap;
  */
 public class SimpleCard implements Serializable {
 
-    private String id;
+    private Integer id;
 
     private HashMap<String, Object> metadata = new HashMap<>();
 
     private HashMap<String , Object> customizedFields = new HashMap<>();
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

@@ -13,12 +13,12 @@ import java.util.List;
  */
 public interface CardService {
 
-    PagedResources<SimpleCardResource> getCardInColumn(String ColumnId);
+    PagedResources<SimpleCardResource> getCardInColumn(Integer ColumnId);
 
     CardResource saveCard(Card card);
 
-    CardResource getCardById(String cardId);
+    CardResource getCardById(Integer cardId);
 
-    List<Card> getCardsInColumn(String columnId) throws UnknownHostException;
+    List<Card> getCardsInColumn(Integer columnId) throws UnknownHostException;
 
 }

@@ -25,8 +25,8 @@ public class ColumnController {
     @Autowired
     ColumnRepository columnRepository;
 
-    @RequestMapping(value = "/{columnId}/", method = RequestMethod.GET, produces = "application/json")
-    public HttpEntity<ColumnResource> getColumnById(@PathVariable String columnId) {
+    @RequestMapping(value = "/{columnId}", method = RequestMethod.GET, produces = "application/json")
+    public HttpEntity<ColumnResource> getColumnById(@PathVariable Integer columnId) {
         Column column = columnRepository.findOne(columnId);
         ColumnResource columnResource = new ColumnResourceAssembler().toResource(column);
         return new ResponseEntity(columnResource, HttpStatus.OK);

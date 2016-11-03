@@ -1,14 +1,14 @@
 package demo.kanban.contract.moscow.resource.card;
 
 import demo.kanban.contract.moscow.resource.column.Column;
+import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
-import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.hateoas.Identifiable;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.HashMap;
@@ -16,13 +16,15 @@ import java.util.HashMap;
 /**
  * Created by xchou on 4/17/16.
  */
-@Document(collection = "cards")
-public class Card implements Identifiable<String> {
+@Getter
+@Entity(name = "cards")
+public class Card {
 
     private static final Logger logger = LoggerFactory.getLogger(Card.class);
 
     @Id
-    private String id;
+    @GeneratedValue
+    private Integer id;
 
     private String number;
 
@@ -54,10 +56,9 @@ public class Card implements Identifiable<String> {
     private String risk;
 
 
-    @DBRef
+    @ManyToOne(targetEntity = Column.class)
     private Column column;
 
-    @Cacheable(key = "#{column.id}")
     public Column getColumn() {
 
         logger.info("column id : " + column.getId());
@@ -68,11 +69,6 @@ public class Card implements Identifiable<String> {
         this.column = column;
     }
 
-    @Override
-    public String getId() {
-        return this.id;
-    }
-
     public Card() {
     }
 
@@ -80,7 +76,7 @@ public class Card implements Identifiable<String> {
         this.number = "Story - " + number;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

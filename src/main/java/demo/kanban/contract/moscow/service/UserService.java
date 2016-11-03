@@ -11,7 +11,7 @@ public interface UserService {
 
     UserResource saveUser(UserResource userResource);
 
-    UserResource getUserById(String userId);
+    UserResource getUserById(Integer userId);
 
     UserResource getUserByName(String userName);
 

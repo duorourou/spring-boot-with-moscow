@@ -2,13 +2,19 @@ server:
   port: 8999
   session:
     timeout: 10
-
   error:
     path: /error
+
 spring:
-  data:
-    mongodb:
-      uri: mongodb://localhost:27017/${security.mongodb.password}
-logging:
-  file: logs/myapplication.log
+  jpa:
+    database: POSTGRESQL
+    show-sql: true
+    hibernate.ddl-auto: update
+  database:
+    driverClassName: org.postgresql.Driver
+  datasource:
+    platform: postgres
+    url: jdbc:postgresql://localhost:5432/kanban
+    username: postgres
+    password: xadmin
 

@@ -22,7 +22,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserResource getUserById(String userId) {
+    public UserResource getUserById(Integer userId) {
         return repository.findOne(userId);
     }
 

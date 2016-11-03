@@ -3,7 +3,6 @@ package demo.kanban.contract.moscow.controller;
 import demo.kanban.contract.moscow.resource.UserResource;
 import demo.kanban.contract.moscow.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.hateoas.EntityLinks;
 import org.springframework.hateoas.ExposesResourceFor;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
@@ -11,9 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 /**
  * Created by xchou on 4/12/16.
@@ -24,15 +20,11 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 public class UserController {
 
     @Autowired
-    EntityLinks entityLinks;
-
-    @Autowired
     UserService userService;
 
     @RequestMapping(value = "/{userId}", method = RequestMethod.GET)
-    public HttpEntity<UserResource> getMoscow(@PathVariable String userId) {
+    public HttpEntity<UserResource> getMoscow(@PathVariable Integer userId) {
         UserResource userResource = userService.getUserById(userId);
-        userResource.add(linkTo(methodOn(UserController.class).getMoscow(userId)).withSelfRel());
         return new ResponseEntity(userResource, HttpStatus.OK);
     }
 
@@ -46,9 +38,6 @@ public class UserController {
     @RequestMapping(method = RequestMethod.GET)
     public HttpEntity<UserResource> getUsers() {
         List<UserResource> userResources = userService.getAllUsers();
-        userResources.forEach(u -> {
-            u.add(linkTo(methodOn(UserController.class).getMoscow(String.valueOf(u.getId()))).withSelfRel());
-        });
         return new ResponseEntity(userResources, HttpStatus.OK);
     }
 }

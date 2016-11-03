@@ -1,36 +1,39 @@
 package demo.kanban.contract.moscow.resource.column;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.hateoas.Identifiable;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.domain.Persistable;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.util.Date;
 
 /**
  * Created by xchou on 4/18/16.
  */
-@Document(collection = "columns")
-public class Column implements Identifiable<String> {
+@Entity(name = "columns")
+public class Column implements Persistable{
 
     @Id
-    private String id;
+    @GeneratedValue
+    private Integer id;
     @NotNull
-    @Size(max = 5, min = 3)
     private String laneName;
-    @JsonIgnore
     private String laneDesc;
-    @JsonIgnore
+    @CreatedDate
     private Date createdAt;
 
-    @Override
-    public String getId() {
+    public Integer getId() {
         return this.id;
     }
 
-    public Column(String id) {
+    @Override
+    public boolean isNew() {
+        return this.id == null;
+    }
+
+    public Column(Integer id) {
         this.id = id;
     }
 
@@ -42,7 +45,7 @@ public class Column implements Identifiable<String> {
         this.laneDesc = laneDesc;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
